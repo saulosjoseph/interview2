@@ -1,417 +1,187 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
 <html>
-  <head>
+<head>
+	<title></title>
+</head>
+<body>
 
-  	<div class="rowTab">
-      <div class="labels">
-        <label for="Categoria">Categoria</label>
-      </div>
-      <div class="rightTab">
-         <select onchange="categoria.call(this, event)">
-		    <option>Fruta</option>
-		    <option>Comida</option>
-		</select>
-      </div>
+	<select id="selectCategoria" onchange="categoria.call(this, event)">
+		<option value = "0">a</option>	
+		<option value = "1">b</option>
+	</select>
+	<select id="selectProduto" onchange="produto.call(this, event)">
+		<option value = "0" id = "product0">0</option>	
+		<option value = "1" id = "product1">1</option>
+	</select>
+	<select id="selectMarca" onchange="marca.call(this, event)">
+		<option value = "0" id = "marca0">0a</option>	
+		<option value = "1" id = "marca1">0b</option>
+	</select>
 
-      <div class="labels">
-        <label for="Producto">Producto</label>
-      </div>
-      <div class="rightTab">
-         <select onchange="produtoF.call(this, event)" id="Fruta" name="Fruta">
-		    <option>Banana</option>
-		    <option>Maca</option>
-		</select>
-		<div class="rightTab">
-			<select onchange="produtoC.call(this, event)" id ="Comida" name="Comida">
-			    <option>Arroz</option>
-			    <option>Feijao</option>
-			</select>
-		</div>
-      </div>
+	<div id="top_x_div" style="width: 800px; height: 600px;"></div>
 
-      <div class="labels">
-        <label for="Marca">Marca</label>
-      </div>
-      <div class="rightTab">
-         <select select onchange="marcaB.call(this, event)" id ="MarcaBanana" name="MarcaBanana">
-		    <option>Marca banana A</option>
-		    <option>Marca banana C</option>
-		</select>
-		<div class="rightTab">
-         <select select onchange="marcaM.call(this, event)" id ="MarcaMaca" name="Marcamaca">
-		    <option>Marca maca X</option>
-		    <option>Marca maca Y</option>
-		</select>
-		 <div class="rightTab">
-         <select select onchange="marcaF.call(this, event)" id ="MarcaFeijao" name="MarcaFeijao">
-		    <option>Marca Feijao A</option>
-		    <option>Marca Feijao C</option>
-		</select>
-		<div class="rightTab">
-         <select select onchange="marcaA.call(this, event)" id ="MarcaArroz" name="MarcaArroz">
-		    <option>Marca Arroz X</option>
-		    <option>Marca Arroz Y</option>
-		</select>
-      </div>
-    </div>
+</body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
+</script>
+<script type="text/javascript">
+
+	var selector;
+	var text;
+	var title;
+
+	window.onload = function() {
+		categoria();
+		produto();
+		marca();
+	}
+
+	function categoria(event) {
+		selector = document.getElementById('selectCategoria');
+		text = selector[selector.selectedIndex].text;
+		if(text == "a"){
+			document.getElementById("product0").textContent = "2";
+			document.getElementById("product1").textContent = "3";
+		} else {
+			document.getElementById("product0").textContent = "0";
+			document.getElementById("product1").textContent = "1";
+		}
+		produto();
+	}
+
+	function produto(event) {
+		selector = document.getElementById('selectProduto');
+		text = selector[selector.selectedIndex].text;
+		if(text == "0"){
+			document.getElementById("marca0").textContent = "0a";
+			document.getElementById("marca1").textContent = "0b";
+		} else if(text == "1") {
+			document.getElementById("marca0").textContent = "1a";
+			document.getElementById("marca1").textContent = "1b";
+		} else if(text == "2") {
+			document.getElementById("marca0").textContent = "2a";
+			document.getElementById("marca1").textContent = "2b";
+		} else if(text == "3") {
+			document.getElementById("marca0").textContent = "3a";
+			document.getElementById("marca1").textContent = "3b";
+		}
+		marca();
+	}
+
+	var bars = [
+	['Month', 'Sales'],
+	["January", 0],
+	["February", 0],
+	["March", 0],
+	["April", 0],
+	];
 
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      
+	function marca(event) {
 
-      document.getElementById("Fruta").style.visibility = "hidden";
-      document.getElementById("Comida").style.visibility = "hidden";
-      document.getElementById("MarcaMaca").style.visibility = "hidden";
-      document.getElementById("MarcaBanana").style.visibility = "hidden";
-      document.getElementById("MarcaFeijao").style.visibility = "hidden";
-      document.getElementById("MarcaArroz").style.visibility = "hidden";
+		selector = document.getElementById('selectMarca');
+		text = selector[selector.selectedIndex].text;
+		title = `Venda mensal de ${text}`
+		if(text == "0a"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 1],
+			["February", 2],
+			["March", 3],
+			["April", 4],
+			];
 
-      
+			drwaw(bars, title);
+		} else if(text == "0b"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 3],
+			["February", 5],
+			["March", 2],
+			["April", 10],
+			];
+			drwaw(bars, title)
+		} else if(text == "1a"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 33],
+			["February", 51],
+			["March", 23],
+			["April", 11],
+			];
+			drwaw(bars, title)
+		} else if(text == "1b"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 13],
+			["February", 21],
+			["March", 33],
+			["April", 31],
+			];
+			drwaw(bars, title)
+		} else if(text == "2a"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 15],
+			["February", 27],
+			["March", 38],
+			["April", 30],
+			];
+			drwaw(bars, title)
+		} else if(text == "2b"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 25],
+			["February", 17],
+			["March", 38],
+			["April", 40],
+			];
+			drwaw(bars, title)
+		} else if(text == "3a"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 11],
+			["February", 9],
+			["March", 20],
+			["April", 4],
+			];
+			drwaw(bars, title)
+		} else if(text == "3b"){
+			bars = [
+			['Month', 'Sales'],
+			["January", 22],
+			["February", 30],
+			["March", 15],
+			["April", 5],
+			];
+			drwaw(bars, title)
+		}
+	}
 
+	function drwaw(bars, title){
+		google.charts.load('current', {'packages':['bar']});
+		google.charts.setOnLoadCallback(drawStuff);
+		function drawStuff() {
 
-      function categoria(event){
-      	if(this.options[this.selectedIndex].text == "Comida"){
-      		document.getElementById("Fruta").style.visibility = "hidden";
-      		document.getElementById("Comida").style.visibility = "visible";
-      		document.getElementById("MarcaFeijao").style.visibility = "hidden";
-      		document.getElementById("MarcaArroz").style.visibility = "hidden";
-      		document.getElementById("MarcaMaca").style.visibility = "hidden";
-      		document.getElementById("MarcaBanana").style.visibility = "hidden";
-      	} else {
-      		document.getElementById("Comida").style.visibility = "hidden";
-      		document.getElementById("Fruta").style.visibility = "visible";
-      		document.getElementById("MarcaFeijao").style.visibility = "hidden";
-      		document.getElementById("MarcaArroz").style.visibility = "hidden";
-      		document.getElementById("MarcaMaca").style.visibility = "hidden";
-      		document.getElementById("MarcaBanana").style.visibility = "hidden";
+			var data = new google.visualization.arrayToDataTable(bars);
 
-      	}
+			var options = {
+				width: 800,
+				legend: { position: 'none' },
+				chart: {
+					title: title},
+					axes: {
+						x: {
+              			0: { side: 'top', label: ' '} // Top x-axis.
+              		}
+              	},
+              	bar: { groupWidth: "90%" }
+              };
+
+              var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+              chart.draw(data, google.charts.Bar.convertOptions(options));
+          }
       }
 
-
-      function produtoF(event){
-      	if(this.options[this.selectedIndex].text == "Banana"){
-      		document.getElementById("MarcaMaca").style.visibility = "hidden";
-      		document.getElementById("MarcaBanana").style.visibility = "visible";
-      		document.getElementById("MarcaFeijao").style.visibility = "hidden";
-      		document.getElementById("MarcaArroz").style.visibility = "hidden";
-      	} else {
-      		document.getElementById("MarcaBanana").style.visibility = "hidden";
-      		document.getElementById("MarcaMaca").style.visibility = "visible";
-      		document.getElementById("MarcaFeijao").style.visibility = "hidden";
-      		document.getElementById("MarcaArroz").style.visibility = "hidden";
-      	}
-      }
-
-      function produtoC(event){
-      	if(this.options[this.selectedIndex].text == "Arroz"){
-      		document.getElementById("MarcaFeijao").style.visibility = "hidden";
-      		document.getElementById("MarcaArroz").style.visibility = "visible";
-      		document.getElementById("MarcaMaca").style.visibility = "hidden";
-      		document.getElementById("MarcaBanana").style.visibility = "hidden";
-      	} else {
-      		document.getElementById("MarcaArroz").style.visibility = "hidden";
-      		document.getElementById("MarcaFeijao").style.visibility = "visible";
-      		document.getElementById("MarcaMaca").style.visibility = "hidden";
-      		document.getElementById("MarcaBanana").style.visibility = "hidden";
-      	} 
-      }
-
-      function marcaB(event){
-        	if(this.options[this.selectedIndex].text == "Marca banana A"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 23],
-	          ["February", 11],
-	          ["March", 54],
-	          ["April", 32],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-
-        	if(this.options[this.selectedIndex].text == "Marca banana C"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 234],
-	          ["February", 656],
-	          ["March", 1],
-	          ["April", 0],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-        }
-
-        function marcaM(event){
-        	if(this.options[this.selectedIndex].text == "Marca maca X"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 323],
-	          ["February", 212],
-	          ["March", 653],
-	          ["April", 100],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-
-        	if(this.options[this.selectedIndex].text == "Marca maca Y"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 234],
-	          ["February", 656],
-	          ["March", 1],
-	          ["April", 0],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-        }
-
-        function marcaF(event){
-        	if(this.options[this.selectedIndex].text == "Marca Feijao A"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 543],
-	          ["February", 323],
-	          ["March", 653],
-	          ["April", 400],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-
-        	if(this.options[this.selectedIndex].text == "Marca Feijao C"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 234],
-	          ["February", 656],
-	          ["March", 1],
-	          ["April", 0],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-        }
-
-        function marcaA(event){
-        	if(this.options[this.selectedIndex].text == "Marca Arroz X"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 1],
-	          ["February", 2],
-	          ["March", 3],
-	          ["April", 4],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-
-        	if(this.options[this.selectedIndex].text == "Marca Arroz Y"){
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-
-	        var data = new google.visualization.arrayToDataTable([
-	          ['Month', 'Sales'],
-	          ["January", 234],
-	          ["February", 656],
-	          ["March", 1],
-	          ["April", 0],
-	        ]);
-
-	        var options = {
-	          width: 800,
-	          legend: { position: 'none' },
-	          chart: {
-	            title: 'Sales by month for'},
-	          axes: {
-	            x: {
-	              0: { side: 'top', label: ' '} // Top x-axis.
-	            }
-	          },
-	          bar: { groupWidth: "90%" }
-	        };
-
-	        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-	        // Convert the Classic options to Material options.
-	        chart.draw(data, google.charts.Bar.convertOptions(options));
-
-
-	      };
-        	}
-        }
-
-
-
-        
-
-    </script>
-  </head>
-  <body>
-    <div id="top_x_div" style="width: 800px; height: 600px;"></div>
-  </body>
-</html>
+  </script>
+  </html>
